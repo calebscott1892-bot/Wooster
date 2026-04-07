@@ -152,8 +152,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Engineered by badge */}
-      <div className="hero-badge absolute bottom-8 right-8 text-right z-20 pointer-events-none">
+      {/* Engineered by badge — hidden on mobile to reduce clutter */}
+      <div className="hero-badge absolute bottom-8 right-8 text-right z-20 pointer-events-none hidden lg:block">
         <p className="text-[10px] tracking-[0.3em] text-wooster-steel/50 uppercase">
           Engineered by
         </p>

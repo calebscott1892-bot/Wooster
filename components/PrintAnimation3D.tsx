@@ -610,16 +610,16 @@ export default function PrintAnimation3D({
         <ZoomController zoomZoneRef={zoomZoneRef} />
       </Canvas>
 
-      {/* ── Reprint button — bottom left ── */}
+      {/* ── Reprint button — bottom left (icon-only on mobile) ── */}
       <button
         onClick={handleReprint}
-        className="absolute bottom-6 left-6 lg:left-10 z-20 flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black/50 border border-white/[0.08] backdrop-blur-md text-white/50 hover:text-wooster-orange hover:border-wooster-orange/40 hover:bg-black/60 transition-all select-none group"
+        className="absolute bottom-6 left-4 lg:left-10 z-20 flex items-center gap-2 px-3 py-2.5 lg:px-5 rounded-lg bg-black/50 border border-white/[0.08] backdrop-blur-md text-white/50 hover:text-wooster-orange hover:border-wooster-orange/40 hover:bg-black/60 transition-all select-none group"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:rotate-[-360deg] transition-transform duration-500">
           <polyline points="23 4 23 10 17 10" />
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
         </svg>
-        <span className="font-mono text-[10px] tracking-[0.15em] uppercase">Reprint</span>
+        <span className="font-mono text-[10px] tracking-[0.15em] uppercase hidden lg:inline">Reprint</span>
       </button>
 
       {/* ── Zoom + scroll-to-continue — centred under model ── */}
@@ -646,7 +646,6 @@ export default function PrintAnimation3D({
             >
               +
             </button>
-            <span className="font-mono text-[8px] tracking-[0.1em] text-white/25 uppercase">Zoom</span>
             <button
               onClick={() => {
                 zoomZoneRef.current?.dispatchEvent(
@@ -661,19 +660,19 @@ export default function PrintAnimation3D({
           </div>
         )}
 
-        {/* Divider */}
-        <div className="w-px h-6 bg-white/10" />
-
-        {/* Scroll-to-continue hint */}
-        <a
-          href="#products"
-          className="flex items-center gap-1.5 text-white/25 hover:text-white/50 transition-colors"
-        >
-          <span className="font-mono text-[9px] tracking-[0.1em] uppercase whitespace-nowrap">or scroll down to continue</span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
-        </a>
+        {/* Divider + scroll hint — desktop only */}
+        <div className="hidden lg:flex items-center gap-3">
+          <div className="w-px h-6 bg-white/10" />
+          <a
+            href="#products"
+            className="flex items-center gap-1.5 text-white/25 hover:text-white/50 transition-colors"
+          >
+            <span className="font-mono text-[9px] tracking-[0.1em] uppercase whitespace-nowrap">or scroll down to continue</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   );
