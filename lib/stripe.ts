@@ -1,5 +1,10 @@
 import type { CartItem } from "./cart";
 
+interface CheckoutSessionResponse {
+  url?: string;
+  error?: string;
+}
+
 export async function createCheckoutSession(items: CartItem[]) {
   const response = await fetch("/api/checkout", {
     method: "POST",
@@ -8,17 +13,16 @@ export async function createCheckoutSession(items: CartItem[]) {
       items: items.map((item) => ({
         productId: item.product.id,
         variantId: item.variant?.id,
-        name: item.product.name + (item.variant ? ` - ${item.variant.name}` : ""),
-        price: item.product.price,
         quantity: item.quantity,
       })),
     }),
   });
 
-  if (!response.ok) {
-    throw new Error("Failed to create checkout session");
+  const payload = (await response.json()) as CheckoutSessionResponse;
+
+  if (!response.ok || !payload.url) {
+    throw new Error(payload.error || "Failed to create checkout session");
   }
 
-  const { url } = await response.json();
-  return url as string;
+  return payload.url;
 }

@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
+import { CheckoutButton } from "@/components/CheckoutButton";
 
 export function CartDrawer() {
   const {
@@ -174,9 +175,10 @@ export function CartDrawer() {
                     {formatPrice(totalPrice, "AUD")}
                   </span>
                 </div>
-                <button className="w-full py-3 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-lg tracking-widest rounded btn-glow hover:bg-wooster-orange-glow transition-colors">
-                  CHECKOUT
-                </button>
+                <CheckoutButton
+                  label="CHECKOUT"
+                  className="w-full py-3 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-lg tracking-widest rounded btn-glow hover:bg-wooster-orange-glow transition-colors"
+                />
                 <p className="text-xs text-wooster-steel text-center mt-3">
                   Shipping calculated at checkout
                 </p>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
+import { CheckoutButton } from "@/components/CheckoutButton";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice } = useCart();
@@ -110,9 +111,10 @@ export default function CartPage() {
                   {formatPrice(totalPrice, "AUD")}
                 </span>
               </div>
-              <button className="w-full py-4 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-xl tracking-[0.2em] rounded btn-glow hover:bg-wooster-orange-glow transition-colors">
-                PROCEED TO CHECKOUT
-              </button>
+              <CheckoutButton
+                label="PROCEED TO CHECKOUT"
+                className="w-full py-4 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-xl tracking-[0.2em] rounded btn-glow hover:bg-wooster-orange-glow transition-colors"
+              />
               <p className="text-xs text-wooster-steel text-center mt-3">
                 Shipping calculated at checkout
               </p>

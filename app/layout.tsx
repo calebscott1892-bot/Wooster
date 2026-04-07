@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { CartDrawer } from "@/components/CartDrawer";
 import { CartProvider } from "@/lib/cart";
+import { getSiteUrlObject } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -25,9 +26,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: getSiteUrlObject(),
   title: "Wooster Core | Performance Big Air Handle",
   description:
     "Precision 3D-printed kitesurfing handle engineered for maximum grip and control during big air sessions. Engineered by Arty Design.",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "kitesurfing",
     "kitesurf handle",
@@ -42,6 +47,7 @@ export const metadata: Metadata = {
     title: "Wooster Core | Performance Big Air Handle",
     description:
       "Precision 3D-printed kitesurfing handle engineered for maximum grip and control during big air sessions.",
+    url: "/",
     type: "website",
     images: ["/images/hero-product.jpg"],
   },
