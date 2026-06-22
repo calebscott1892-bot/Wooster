@@ -114,6 +114,14 @@ export function SpecsSection() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 rounded-lg ring-1 ring-white/5" />
+            {/* Engineering corner brackets */}
+            <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-wooster-orange/60" />
+            <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-wooster-orange/60" />
+            <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-wooster-orange/60" />
+            <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-wooster-orange/60" />
+            <span className="absolute bottom-6 left-6 px-2 py-1 bg-black/60 backdrop-blur-sm border border-white/10 rounded text-[9px] font-[family-name:var(--font-mono)] tracking-[0.25em] text-wooster-silver/80 uppercase">
+              Actual Print — 0.2mm Layers
+            </span>
           </motion.div>
 
           {/* Specs Table */}
@@ -129,9 +137,12 @@ export function SpecsSection() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.4, delay: 0.5 + index * 0.08 }}
-                  className="flex items-center justify-between py-4 border-b border-white/5 group hover:border-wooster-orange/20 transition-colors"
+                  className="flex items-center justify-between py-4 border-b border-white/5 group hover:border-wooster-orange/20 hover:bg-wooster-orange/[0.03] transition-colors px-2 -mx-2"
                 >
                   <span className="font-[family-name:var(--font-mono)] text-xs tracking-[0.2em] text-wooster-steel/60 uppercase">
+                    <span className="text-wooster-orange/40 mr-3">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                     {spec.label}
                   </span>
                   <span className="font-[family-name:var(--font-mono)] text-sm text-wooster-orange group-hover:text-wooster-orange-glow transition-colors">

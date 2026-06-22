@@ -9,33 +9,33 @@ const components = [
     name: "Wooster Core Handle",
     description: "Precision 3D-printed PETG/ASA construction",
     position: "top-[10%] left-[15%]",
-    lineEnd: "top-[25%] left-[35%]",
+    side: "left",
   },
   {
     name: "Mounting Plates",
     description: "Signal Orange accent plates for secure board attachment",
     position: "top-[55%] left-[5%]",
-    lineEnd: "top-[50%] left-[30%]",
+    side: "left",
   },
   {
     name: "Mounting Clips",
     description: "Custom-designed retention clips",
     position: "bottom-[25%] left-[15%]",
-    lineEnd: "bottom-[30%] left-[40%]",
+    side: "left",
   },
   {
     name: "Stainless Bolts",
     description: "Marine-grade stainless steel hardware",
     position: "bottom-[20%] right-[15%]",
-    lineEnd: "bottom-[30%] right-[35%]",
+    side: "right",
   },
   {
     name: "Washers",
     description: "Precision-fit stainless steel washers",
     position: "top-[60%] right-[5%]",
-    lineEnd: "top-[55%] right-[30%]",
+    side: "right",
   },
-];
+] as const;
 
 export function ExplodedView() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -93,12 +93,12 @@ export function ExplodedView() {
               {components.map((component, index) => (
                 <motion.div
                   key={component.name}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: component.side === "left" ? -20 : 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.8 + index * 0.15 }}
                   className={`absolute ${component.position} group`}
                 >
-                  <div className="bg-wooster-black/80 backdrop-blur-sm border border-wooster-orange/30 rounded-lg px-4 py-2 whitespace-nowrap">
+                  <div className="bg-wooster-black/80 backdrop-blur-sm border border-wooster-orange/30 rounded-lg px-4 py-2 whitespace-nowrap hover:border-wooster-orange/60 transition-colors">
                     <p className="font-[family-name:var(--font-display)] text-sm tracking-[0.1em] text-white">
                       {component.name.toUpperCase()}
                     </p>
@@ -106,8 +106,18 @@ export function ExplodedView() {
                       {component.description}
                     </p>
                   </div>
-                  {/* Connector dot */}
-                  <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-2 h-2 bg-wooster-orange rounded-full" />
+                  {/* Leader line + connector dot — points toward the product */}
+                  {component.side === "left" ? (
+                    <div className="absolute left-full top-1/2 -translate-y-1/2 flex items-center">
+                      <div className="w-10 h-px bg-gradient-to-r from-wooster-orange/70 to-wooster-orange/20" />
+                      <div className="w-2 h-2 bg-wooster-orange rounded-full shadow-[0_0_8px_rgba(255,107,0,0.6)]" />
+                    </div>
+                  ) : (
+                    <div className="absolute right-full top-1/2 -translate-y-1/2 flex items-center">
+                      <div className="w-2 h-2 bg-wooster-orange rounded-full shadow-[0_0_8px_rgba(255,107,0,0.6)]" />
+                      <div className="w-10 h-px bg-gradient-to-l from-wooster-orange/70 to-wooster-orange/20" />
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </div>

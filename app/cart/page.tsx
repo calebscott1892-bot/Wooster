@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { ProductImage } from "@/components/ProductImage";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice } = useCart();
@@ -35,10 +36,15 @@ export default function CartPage() {
                   key={`${item.product.id}-${item.variant?.id || "default"}`}
                   className="flex gap-6 p-6 bg-wooster-charcoal border border-white/5 rounded-lg"
                 >
-                  <div className="w-24 h-24 bg-wooster-dark rounded flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs text-wooster-steel font-[family-name:var(--font-mono)]">
-                      IMG
-                    </span>
+                  <div className="relative w-24 h-24 bg-wooster-dark rounded overflow-hidden flex-shrink-0">
+                    <ProductImage
+                      src={item.product.image || ""}
+                      alt={item.product.name}
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                      compactFallback
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-[family-name:var(--font-display)] text-lg tracking-wide text-white">

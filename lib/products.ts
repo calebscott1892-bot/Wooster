@@ -14,6 +14,7 @@ export interface Product {
   price: number;
   currency: string;
   status: ProductStatus;
+  sku?: string;
   material?: string;
   includes?: string[];
   variants?: ProductVariant[];
@@ -40,6 +41,7 @@ export const products: Product[] = [
     price: 149,
     currency: "AUD",
     status: "available",
+    sku: "WC-100",
     material: "PETG/ASA",
     includes: [
       "Wooster Core Handle",
@@ -60,6 +62,7 @@ export const products: Product[] = [
     price: 49,
     currency: "AUD",
     status: "available",
+    sku: "WC-200",
     variants: [
       { id: "mount-black", name: "Stealth Black", color: "#1A1A1A" },
       { id: "mount-orange", name: "Signal Orange", color: "#FF6B00" },
@@ -75,6 +78,7 @@ export const products: Product[] = [
     price: 59,
     currency: "AUD",
     status: "available",
+    sku: "WC-250",
     image: "/images/product-standalone.jpg",
   },
   {
@@ -121,8 +125,39 @@ export const bundles: Bundle[] = [
   },
 ];
 
+// Bundles represented as purchasable products so the cart and checkout
+// can treat them like any other line item (at the bundle price).
+export const bundleProducts: Product[] = bundles.map((bundle) => ({
+  id: bundle.id,
+  name: bundle.name,
+  tagline: "Complete System",
+  description: bundle.description,
+  price: bundle.price,
+  currency: bundle.currency,
+  status: "available",
+  sku: "WC-BNDL",
+  includes: bundle.includes
+    .map((id) => products.find((p) => p.id === id)?.name)
+    .filter((name): name is string => Boolean(name)),
+  image: bundle.image,
+}));
+
 export function getProduct(id: string): Product | undefined {
   return products.find((p) => p.id === id);
+}
+
+/** Anything that can be bought — catalog products plus bundles. */
+export function getPurchasable(id: string): Product | undefined {
+  return getProduct(id) ?? bundleProducts.find((p) => p.id === id);
+}
+
+/** Combined value of a bundle's contents minus the bundle price. */
+export function getBundleSavings(bundle: Bundle): number {
+  const value = bundle.includes.reduce(
+    (sum, id) => sum + (products.find((p) => p.id === id)?.price ?? 0),
+    0
+  );
+  return Math.max(0, value - bundle.price);
 }
 
 export function getAvailableProducts(): Product[] {

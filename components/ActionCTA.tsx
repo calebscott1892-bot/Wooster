@@ -21,6 +21,23 @@ export function ActionCTA() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-wooster-orange/5 rounded-full blur-[150px]" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-wooster-orange/3 rounded-full blur-[150px]" />
 
+      {/* Outline-text marquee backdrop */}
+      <div
+        aria-hidden="true"
+        className="absolute top-1/2 left-0 right-0 -translate-y-1/2 overflow-hidden pointer-events-none"
+      >
+        <div className="marquee-track flex whitespace-nowrap">
+          {[0, 1].map((copy) => (
+            <span
+              key={copy}
+              className="text-outline font-[family-name:var(--font-display)] text-[10rem] md:text-[16rem] leading-none tracking-[0.05em] pr-16"
+            >
+              BIG AIR — SEND IT — GO HUGE —&nbsp;
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

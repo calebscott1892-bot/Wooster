@@ -85,9 +85,9 @@ export function SocialProof() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.15 }}
-              className="relative p-6 bg-wooster-charcoal/30 border border-white/5 rounded-lg"
+              className="relative p-6 bg-wooster-charcoal/30 border border-white/5 rounded-lg hover:border-wooster-orange/20 transition-colors group"
             >
-              <span className="font-[family-name:var(--font-display)] text-4xl text-wooster-orange/20">
+              <span className="font-[family-name:var(--font-display)] text-4xl text-wooster-orange/20 group-hover:text-wooster-orange/40 transition-colors">
                 {item.step}
               </span>
               <h3 className="font-[family-name:var(--font-display)] text-lg tracking-[0.1em] text-white mt-2">
@@ -95,9 +95,19 @@ export function SocialProof() {
               </h3>
               <p className="text-sm text-wooster-steel mt-2">{item.desc}</p>
 
-              {/* Connector line */}
+              {/* Connector chevron */}
               {index < 3 && (
-                <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-px bg-wooster-orange/20" />
+                <svg
+                  className="hidden md:block absolute top-1/2 -right-[18px] -translate-y-1/2 w-3 h-3 text-wooster-orange/30 z-10"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               )}
             </motion.div>
           ))}
@@ -132,8 +142,10 @@ export function SocialProof() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.8 + index * 0.15 }}
-              className="p-6 bg-wooster-charcoal/20 border border-white/5 rounded-xl"
+              className="relative p-6 bg-wooster-charcoal/20 border border-white/5 rounded-xl overflow-hidden hover:border-wooster-orange/20 transition-colors group"
             >
+              {/* Accent bar */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-wooster-orange/0 via-wooster-orange/40 to-wooster-orange/0 opacity-0 group-hover:opacity-100 transition-opacity" />
               {/* Quote mark */}
               <span className="font-[family-name:var(--font-display)] text-4xl text-wooster-orange/30 leading-none">
                 &ldquo;
@@ -141,13 +153,18 @@ export function SocialProof() {
               <p className="text-wooster-silver text-sm leading-relaxed mt-2">
                 {testimonial.quote}
               </p>
-              <div className="mt-4 pt-4 border-t border-white/5">
-                <p className="text-sm text-white font-medium">
-                  {testimonial.name}
-                </p>
-                <p className="text-xs text-wooster-steel mt-0.5">
-                  {testimonial.role}
-                </p>
+              <div className="mt-4 pt-4 border-t border-white/5 flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-wooster-orange/10 border border-wooster-orange/30 flex items-center justify-center font-[family-name:var(--font-mono)] text-[10px] text-wooster-orange">
+                  WC
+                </span>
+                <div>
+                  <p className="text-sm text-white font-medium">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-xs text-wooster-steel mt-0.5">
+                    {testimonial.role}
+                  </p>
+                </div>
               </div>
             </motion.div>
           ))}

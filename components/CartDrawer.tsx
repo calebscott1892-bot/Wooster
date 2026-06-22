@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
 import { CheckoutButton } from "@/components/CheckoutButton";
+import { ProductImage } from "@/components/ProductImage";
 
 export function CartDrawer() {
   const {
@@ -87,11 +88,16 @@ export function CartDrawer() {
                       key={`${item.product.id}-${item.variant?.id || "default"}`}
                       className="flex gap-4 p-4 bg-wooster-black/50 rounded-lg border border-white/5"
                     >
-                      {/* Product image placeholder */}
-                      <div className="w-16 h-16 bg-wooster-dark rounded flex-shrink-0 flex items-center justify-center">
-                        <span className="text-xs text-wooster-steel font-[family-name:var(--font-mono)]">
-                          IMG
-                        </span>
+                      {/* Product thumbnail */}
+                      <div className="relative w-16 h-16 bg-wooster-dark rounded flex-shrink-0 overflow-hidden">
+                        <ProductImage
+                          src={item.product.image || ""}
+                          alt={item.product.name}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                          compactFallback
+                        />
                       </div>
 
                       <div className="flex-1 min-w-0">
@@ -117,11 +123,12 @@ export function CartDrawer() {
                                 item.variant?.id
                               )
                             }
-                            className="w-6 h-6 flex items-center justify-center bg-wooster-dark rounded text-wooster-steel hover:text-white text-xs"
+                            aria-label="Decrease quantity"
+                            className="w-6 h-6 flex items-center justify-center bg-wooster-dark border border-white/10 rounded text-wooster-steel hover:text-white hover:border-wooster-orange/40 text-xs transition-colors"
                           >
-                            -
+                            −
                           </button>
-                          <span className="text-sm font-[family-name:var(--font-mono)] text-white">
+                          <span className="text-sm font-[family-name:var(--font-mono)] text-white min-w-4 text-center">
                             {item.quantity}
                           </span>
                           <button
@@ -132,10 +139,19 @@ export function CartDrawer() {
                                 item.variant?.id
                               )
                             }
-                            className="w-6 h-6 flex items-center justify-center bg-wooster-dark rounded text-wooster-steel hover:text-white text-xs"
+                            aria-label="Increase quantity"
+                            className="w-6 h-6 flex items-center justify-center bg-wooster-dark border border-white/10 rounded text-wooster-steel hover:text-white hover:border-wooster-orange/40 text-xs transition-colors"
                           >
                             +
                           </button>
+                          {item.quantity > 1 && (
+                            <span className="ml-auto text-xs font-[family-name:var(--font-mono)] text-wooster-steel/60">
+                              {formatPrice(
+                                item.product.price * item.quantity,
+                                item.product.currency
+                              )}
+                            </span>
+                          )}
                         </div>
                       </div>
 

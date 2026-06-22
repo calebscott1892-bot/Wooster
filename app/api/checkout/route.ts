@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { getProduct } from "@/lib/products";
+import { getPurchasable } from "@/lib/products";
 
 export const runtime = "nodejs";
 
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     }> = [];
 
     for (const item of items) {
-      const product = getProduct(item.productId);
+      const product = getPurchasable(item.productId);
 
       if (!product || product.status !== "available" || product.price <= 0) {
         return NextResponse.json(

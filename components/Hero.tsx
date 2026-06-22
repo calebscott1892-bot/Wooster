@@ -67,6 +67,16 @@ export function Hero() {
           "-=0.3"
         )
         .from(
+          ".hero-stat",
+          {
+            y: 12,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.12,
+          },
+          "-=0.2"
+        )
+        .from(
           ".hero-badge",
           {
             opacity: 0,
@@ -137,9 +147,21 @@ export function Hero() {
             <div className="hero-cta mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pointer-events-auto">
               <a
                 href="#products"
-                className="inline-flex items-center justify-center px-8 py-4 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-lg tracking-[0.2em] rounded btn-glow hover:bg-wooster-orange-glow transition-all"
+                className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-wooster-orange text-white font-[family-name:var(--font-display)] text-lg tracking-[0.2em] rounded btn-glow hover:bg-wooster-orange-glow transition-all"
               >
                 SHOP NOW
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
               </a>
               <a
                 href="#system"
@@ -147,6 +169,27 @@ export function Hero() {
               >
                 EXPLORE
               </a>
+            </div>
+
+            {/* Spec stat strip */}
+            <div className="mt-10 hidden sm:flex items-center gap-5 justify-center lg:justify-start">
+              {[
+                { value: "PETG/ASA", label: "Polymer Frame" },
+                { value: "316 SS", label: "Marine Hardware" },
+                { value: "WOO", label: "Mount Ready" },
+              ].map((stat, i) => (
+                <div key={stat.label} className="hero-stat flex items-center gap-5">
+                  {i > 0 && <div className="w-px h-8 bg-white/10" />}
+                  <div>
+                    <p className="font-[family-name:var(--font-mono)] text-sm text-white/85 tracking-[0.1em]">
+                      {stat.value}
+                    </p>
+                    <p className="font-[family-name:var(--font-mono)] text-[9px] text-wooster-steel/50 tracking-[0.2em] uppercase mt-1">
+                      {stat.label}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

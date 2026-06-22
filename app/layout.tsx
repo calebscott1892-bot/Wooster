@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { CartDrawer } from "@/components/CartDrawer";
+import { C4Credit } from "@/components/C4Credit";
 import { CartProvider } from "@/lib/cart";
 import { getSiteUrlObject } from "@/lib/site-url";
 
@@ -24,6 +25,10 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+};
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrlObject(),
@@ -61,12 +66,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${bebasNeue.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="min-h-screen bg-wooster-black text-wooster-silver antialiased">
         <CartProvider>
           <Navigation />
           <main>{children}</main>
+          <C4Credit />
           <CartDrawer />
         </CartProvider>
       </body>

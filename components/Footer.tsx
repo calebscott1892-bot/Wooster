@@ -5,11 +5,13 @@ import Link from "next/link";
 
 export function Footer() {
   const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Newsletter signup logic TBD
     setEmail("");
+    setSubmitted(true);
   };
 
   return (
@@ -116,23 +118,43 @@ export function Footer() {
             <p className="text-sm text-wooster-steel mb-4">
               Get updates on new products, drops, and rider content.
             </p>
-            <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="flex-1 px-4 py-2.5 bg-wooster-dark border border-white/10 rounded text-sm text-white placeholder:text-wooster-steel/40 focus:outline-none focus:border-wooster-orange/50 transition-colors"
-                required
-                suppressHydrationWarning
-              />
-              <button
-                type="submit"
-                className="px-4 py-2.5 bg-wooster-orange text-white text-sm font-[family-name:var(--font-display)] tracking-wider rounded hover:bg-wooster-orange-glow transition-colors"
-              >
-                JOIN
-              </button>
-            </form>
+            {submitted ? (
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-wooster-orange/10 border border-wooster-orange/30 rounded">
+                <svg
+                  className="w-4 h-4 text-wooster-orange flex-shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <p className="text-sm text-wooster-silver">
+                  You&apos;re on the list. Stay tuned.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  aria-label="Email address"
+                  className="flex-1 min-w-0 px-4 py-2.5 bg-wooster-dark border border-white/10 rounded text-sm text-white placeholder:text-wooster-steel/40 focus:outline-none focus:border-wooster-orange/50 transition-colors"
+                  required
+                  suppressHydrationWarning
+                />
+                <button
+                  type="submit"
+                  className="px-4 py-2.5 bg-wooster-orange text-white text-sm font-[family-name:var(--font-display)] tracking-wider rounded hover:bg-wooster-orange-glow transition-colors"
+                >
+                  JOIN
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
