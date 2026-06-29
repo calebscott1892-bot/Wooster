@@ -77,11 +77,15 @@ const LABELS: LabelDef[] = [
 function DotMarker({
   position,
   onClick,
+  onHover,
+  onHoverEnd,
   isActive,
   clipPlane,
 }: {
   position: [number, number, number];
   onClick: () => void;
+  onHover?: () => void;
+  onHoverEnd?: () => void;
   isActive: boolean;
   clipPlane: THREE.Plane;
 }) {
@@ -120,10 +124,12 @@ function DotMarker({
         e.stopPropagation();
         setHovered(true);
         document.body.style.cursor = "pointer";
+        onHover?.();
       }}
       onPointerOut={() => {
         setHovered(false);
         document.body.style.cursor = "";
+        onHoverEnd?.();
       }}
     >
       <sphereGeometry args={[0.04, 16, 16]} />
@@ -287,6 +293,8 @@ function PrintScene({
   onInteractEnd,
   activeId,
   onDotClick,
+  onDotHover,
+  onDotHoverEnd,
   clipPlane,
   printKey,
 }: {
@@ -296,6 +304,8 @@ function PrintScene({
   onInteractEnd?: () => void;
   activeId: string | null;
   onDotClick: (id: string) => void;
+  onDotHover?: (id: string) => void;
+  onDotHoverEnd?: (id: string) => void;
   clipPlane: THREE.Plane;
   printKey: number;
 }) {
@@ -489,6 +499,8 @@ function PrintScene({
           position={l.pos}
           isActive={activeId === l.id}
           onClick={() => onDotClick(l.id)}
+          onHover={() => onDotHover?.(l.id)}
+          onHoverEnd={() => onDotHoverEnd?.(l.id)}
           clipPlane={clipPlane}
         />
       ))}
@@ -578,6 +590,14 @@ export default function PrintAnimation3D({
     setActiveLabel((prev) => (prev === id ? null : id));
   }, []);
 
+  const handleDotHover = useCallback((id: string) => {
+    if (!isMobile) setActiveLabel(id);
+  }, [isMobile]);
+
+  const handleDotHoverEnd = useCallback(() => {
+    if (!isMobile) setActiveLabel(null);
+  }, [isMobile]);
+
   const handleReprint = useCallback(() => {
     setPrintDone(false);
     setActiveLabel(null);
@@ -604,6 +624,8 @@ export default function PrintAnimation3D({
           onInteractEnd={onInteractEnd}
           activeId={activeLabel}
           onDotClick={handleDotClick}
+          onDotHover={handleDotHover}
+          onDotHoverEnd={handleDotHoverEnd}
           clipPlane={clipPlane}
           printKey={printKey}
         />
